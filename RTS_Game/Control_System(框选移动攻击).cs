@@ -1,9 +1,11 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class UserControl : MonoBehaviour
+public class Control_System : MonoBehaviour
 {
     Vector3 startPosition;
     public RectTransform image;
@@ -41,6 +43,24 @@ public class UserControl : MonoBehaviour
             FrameSelect();
             image.gameObject.SetActive(false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            foreach(GameObject gi in selectList)
+            {
+                //移动到目标位置
+                NavMeshAgent agent = gi.GetComponent<NavMeshAgent>();
+                //将屏幕上的点转换为世界坐标，我用涉县吧
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 100f))        //最大长度设置为100f
+                {
+                    agent.SetDestination(hit.point);
+                }
+
+                
+            }
+        }
     }
 
     void DrawSelectFrame()
@@ -53,9 +73,9 @@ public class UserControl : MonoBehaviour
         image.sizeDelta = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
     }
 
-    public List<GameObject> gameObjectList;
+    public List<GameObject> gameObjectList; //声明为public，Unity引擎会自动实例化，以便于在监视面板使用，懂了
 
-    private List<GameObject> selectList;
+    private List<GameObject> selectList=new List<GameObject>(); //必须实例化才可以使用
 
     void FrameSelect()
     {
