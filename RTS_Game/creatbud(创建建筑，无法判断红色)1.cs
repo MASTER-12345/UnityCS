@@ -9,6 +9,8 @@ public class building_Script : MonoBehaviour
     public GameObject moniBuiding1;
 
     private bool take = false;
+    
+    //注意给layer层建筑设置ignore ray，不然建筑会向上飘
 
     // Start is called before the first frame update
     void Start()
