@@ -5,7 +5,13 @@ using UnityEngine;
 public class UseType : MonoBehaviour
 {
 
-    //ÅĞ¶ÏÊ¿±ø»¹ÊÇ½¨Öş,»¹ÊÇÔØ¾ß
+    public enum Can_attack
+    {
+        yes,no
+    }
+    public Can_attack canbe_attack = Can_attack.yes;
+
+    //åˆ¤æ–­å£«å…µè¿˜æ˜¯å»ºç­‘,è¿˜æ˜¯è½½å…·
     public enum object_type
     {
         buildings, sodier,vehicle
@@ -14,34 +20,43 @@ public class UseType : MonoBehaviour
 
 
 
-    //ÅĞ¶ÏÊÇ¶Ó³¤£¬»òÕßĞ¡±ø£¬»òÕßÎŞ;
+    //åˆ¤æ–­æ˜¯é˜Ÿé•¿ï¼Œæˆ–è€…å°å…µï¼Œæˆ–è€…æ— ;
     public enum sodier_type
     {
         teamer,comsodier,none
     }
     public sodier_type sodiertype = sodier_type.teamer;
 
+  
 
 
-    //ÅĞ¶ÏÊÇµĞÈË£¬¶ÓÓÑ£¬×Ô¼º£¬»¹ÊÇÖĞÁ¢ÉúÎïÌå
+    //åˆ¤æ–­æ˜¯æ•Œäººï¼Œé˜Ÿå‹ï¼Œè‡ªå·±ï¼Œè¿˜æ˜¯ä¸­ç«‹ç”Ÿç‰©ä½“
     public enum Group_type
     {
-        selfs,enemy,partner,other
+        selfs,enemy,partner,other,none
     }
     public Group_type group = Group_type.selfs;
 
-
-    // Start is called before the first frame update
-    void Start()
+    //åˆ¤æ–­å»ºç­‘ç§ç±»
+    public enum Buiding_kind
     {
-        
+        produce,
+        defence,
+        spy,
+        none
     }
-
-    // Update is called once per frame
-    void Update()
+    public Buiding_kind buildkind = Buiding_kind.produce;
+    //åˆ¤æ–­å…µç§
+    public enum sodier_kind
     {
-        
+        comsodier,none
+
     }
+    public sodier_kind sodierkind = sodier_kind.comsodier;
+
+
+
+    
 
    
 }
