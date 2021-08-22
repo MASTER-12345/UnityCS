@@ -25,7 +25,7 @@ public class rts_control : MonoBehaviour
 
 
         // && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()
-        //Õâ¾ä´úÂëÖÁ¹ØÖØÒª£¬´ú±íui²»»á±»ÉäÏß´©Í¸£¬»òÕßµã»÷uiÊ±£¬²»»áÓĞÉäÏß
+        //è¿™å¥ä»£ç è‡³å…³é‡è¦ï¼Œä»£è¡¨uiä¸ä¼šè¢«å°„çº¿ç©¿é€ï¼Œæˆ–è€…ç‚¹å‡»uiæ—¶ï¼Œä¸ä¼šæœ‰å°„çº¿
         if (Input.GetKeyDown(KeyCode.Mouse1) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             nav.enabled = true;
@@ -76,7 +76,7 @@ public class rts_control : MonoBehaviour
         while (true)
         {
             var dis = Vector3.Distance(transform.position, enemy.transform.position);
-            print("µ±Ç°¾àÀë"+dis);
+            print("å½“å‰è·ç¦»"+dis);
             yield return new WaitForSeconds(0.05f);
             if (dis >= 7)
             {
@@ -87,7 +87,7 @@ public class rts_control : MonoBehaviour
 
              
 
-                    print("¾àÀë½øÁË");
+                    print("è·ç¦»è¿›äº†");
                     nav.enabled = false;
 
                 break;
@@ -102,7 +102,7 @@ public class rts_control : MonoBehaviour
 
     public void sod()
     {
-        print("ÎÒ±»µã»÷ÁË£¬È»ºóÉäÏßÎ´·¢³ö£¬Î´ÒÆ¶¯×Å");
+        print("æˆ‘è¢«ç‚¹å‡»äº†ï¼Œç„¶åå°„çº¿æœªå‘å‡ºï¼Œæœªç§»åŠ¨ç€");
 
     }
 }
