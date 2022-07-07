@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 public class Lot_Eyes : MonoBehaviour
 {
@@ -94,6 +95,9 @@ public class Lot_Eyes : MonoBehaviour
     private bool drawRectangle = false;//是否开始画线标志
 
 
+    [BoxGroup("canvas")]
+    public Canvas c_canvas;
+
     void Start()
     {
 
@@ -178,7 +182,17 @@ public class Lot_Eyes : MonoBehaviour
 
     }
 
+    //判断是否点击在UI上
+    public bool IsPointerOverUIObject(Canvas canvas, Vector2 screenPosition)
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = screenPosition;
+        GraphicRaycaster uiRaycaster = canvas.gameObject.GetComponent<GraphicRaycaster>();
 
+        List<RaycastResult> results = new List<RaycastResult>();
+        uiRaycaster.Raycast(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
 
 
     void Update()
@@ -198,18 +212,14 @@ public class Lot_Eyes : MonoBehaviour
                 }
                 if (Input.GetTouch(0).phase == TouchPhase.Moved)
                 {
-                    //判断是否点击到Ui以上，双端支持
-                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    {
-                        //TODO：点击在了UI上                     
-                    }
-                    else
+                    //判断是否点击在ui上了
+                    bool isInUi = IsPointerOverUIObject(c_canvas, Input.mousePosition);
+                    if (isInUi == false)
                     {
                         MoveCamera(Input.GetTouch(0).position);
-                    }
 
+                    }
                     isClick = false;
-                    //print("拖动中,设置不可点击" +isClick);
 
                     
 
@@ -219,16 +229,15 @@ public class Lot_Eyes : MonoBehaviour
                 m_IsSingleFinger = true;
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
-                    //判断是否点击到Ui以上，双端支持
-                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    //判断是否点击在ui上了
+                    bool isInUi = IsPointerOverUIObject(c_canvas, Input.mousePosition);
+
+                    if (isInUi == false)
                     {
-                        //TODO：点击在了UI上                     
-                    }
-                    else
-                    {
+                   
                         if (isClick == true)
                         {
-
+                 
                             //发出射线，然后判断点击的什么
                             //判断点击的地面或者是其他
 
@@ -241,7 +250,10 @@ public class Lot_Eyes : MonoBehaviour
                                 //点击的是地面还是物体
                                 if (hit_target.collider.gameObject.tag == "ground")
                                 {
-
+                                    foreach (GameObject i in Selected_Obj)
+                                    {
+                                        i.GetComponent<Lot_SodierBase>().Move(hit_target.point);
+                                    }
 
                                 }
 
@@ -252,13 +264,6 @@ public class Lot_Eyes : MonoBehaviour
                         isClick = true;
 
                     }
-
-
-
-
-
-
-
 
 
                 }
@@ -490,3 +495,4 @@ public class Lot_Eyes : MonoBehaviour
 
 
 }
+
