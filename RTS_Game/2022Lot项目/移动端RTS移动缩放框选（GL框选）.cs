@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Lot_Eyes : MonoBehaviour
+
+public class Lot_Eyes : MonoBehaviourPunCallbacks
 {
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -63,8 +64,8 @@ public class Lot_Eyes : MonoBehaviour
     //屏幕位置是拖动还是点击
     public bool isClick = true;
 
-    //是否点击在Ui上
-    //public bool isInUi = false;
+    //第一次是否点击在Ui上，防止屏幕跳动
+    private bool is_First_InUi = false;
 
 
     //##############################
@@ -82,9 +83,7 @@ public class Lot_Eyes : MonoBehaviour
     [BoxGroup("UEsystem")]
     //箭头
     public GameObject click_arrow;
-    [BoxGroup("UEsystem")]
-    //攻击箭头
-    public GameObject attack_arrow;
+
 
 
     [BoxGroup("GL")]
@@ -208,6 +207,18 @@ public class Lot_Eyes : MonoBehaviour
                     //在开始触摸或者从两字手指放开回来的时候记录一下触摸的位置
                     lastSingleTouchPosition = Input.GetTouch(0).position;
 
+                    //判断是否点击在ui上了
+                    bool isInUi = IsPointerOverUIObject(c_canvas, Input.mousePosition);
+                    if (isInUi == false)
+                    {
+                        is_First_InUi = false;
+                    }
+                    else
+                    {
+                        is_First_InUi = true;
+                    }
+                   
+
 
                 }
                 if (Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -216,7 +227,11 @@ public class Lot_Eyes : MonoBehaviour
                     bool isInUi = IsPointerOverUIObject(c_canvas, Input.mousePosition);
                     if (isInUi == false)
                     {
-                        MoveCamera(Input.GetTouch(0).position);
+                        if (is_First_InUi == false)
+                        {
+                            MoveCamera(Input.GetTouch(0).position);
+                        }
+                       
 
                     }
                     isClick = false;
@@ -252,6 +267,9 @@ public class Lot_Eyes : MonoBehaviour
                                 {
                                     foreach (GameObject i in Selected_Obj)
                                     {
+                                        click_arrow.SetActive(true);
+                                        click_arrow.transform.position = hit_target.point;
+
                                         i.GetComponent<Lot_SodierBase>().Move(hit_target.point);
                                     }
 
@@ -363,6 +381,13 @@ public class Lot_Eyes : MonoBehaviour
     }
 
 
+    [PunRPC]
+    void Rpc_Move(int[] code,Vector3 point)
+    {
+
+    }
+
+
     void FrameSelect()
     {
 
@@ -402,7 +427,7 @@ public class Lot_Eyes : MonoBehaviour
                 }
                 else
                 {
-                    print("ADDDD+" + location);
+                    //print("ADDDD+" + location);
                     Selected_Obj.Add(item);
 
 
@@ -495,4 +520,3 @@ public class Lot_Eyes : MonoBehaviour
 
 
 }
-
