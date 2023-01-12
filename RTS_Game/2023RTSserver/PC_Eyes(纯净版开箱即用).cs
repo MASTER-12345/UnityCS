@@ -181,11 +181,7 @@ public class PC_Eyes : MonoBehaviour
                 FrameSelect();
 
             }
-            if (Input.GetKey(KeyCode.Mouse0))
-            {
-                //DrawSelectFrame();
-            }
-            //#############################
+          
 
             if (Input.GetKeyDown(KeyCode.Mouse1) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
@@ -374,3 +370,4 @@ public class PC_Eyes : MonoBehaviour
 
    
 }
+
