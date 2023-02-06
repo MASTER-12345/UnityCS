@@ -1,4 +1,4 @@
-//可实现垂直水平后坐力以及其回归
+//可实现垂直水平后坐力以及其回归,,配合lowpoly 3.2的移动与枪口摇摆功能，实现大厂的反馈感
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
