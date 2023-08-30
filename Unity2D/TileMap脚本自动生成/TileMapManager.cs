@@ -41,13 +41,15 @@ public class TileMapManager : MonoBehaviour
             TileCollection.TileName tilename = (TileCollection.TileName)c;
             
             GameObject tilemap_obj = Instantiate(tilemapPrefab);
+            tilemap_obj.name = i.ToString();
             tilemap_obj.transform.parent = transform;
             {
                 tilemap_obj.AddComponent<TilemapCollider2D>();
                 tilemap_obj.AddComponent<CompositeCollider2D>();
-                //tilemap_obj.GetComponent<TilemapCollider2D>().usedByComposite = true;不能勾选，勾选后碰撞体会失效
                 tilemap_obj.GetComponent<Rigidbody2D>().bodyType=RigidbodyType2D.Static;
                 tilemap_obj.GetComponent<CompositeCollider2D>().isTrigger = true;
+                tilemap_obj.GetComponent<TilemapCollider2D>().usedByComposite = true;
+                tilemap_obj.GetComponent<CompositeCollider2D>().geometryType = CompositeCollider2D.GeometryType.Polygons;
             }
             Tilemap tilemap = tilemap_obj.GetComponent<Tilemap>();
             {
@@ -84,3 +86,4 @@ public class TileMapManager : MonoBehaviour
 
     }
 }
+
