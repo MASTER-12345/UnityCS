@@ -45,7 +45,7 @@ public class TileMapManager : MonoBehaviour
             {
                 tilemap_obj.AddComponent<TilemapCollider2D>();
                 tilemap_obj.AddComponent<CompositeCollider2D>();
-                tilemap_obj.GetComponent<TilemapCollider2D>().usedByComposite = true;
+                //tilemap_obj.GetComponent<TilemapCollider2D>().usedByComposite = true;不能勾选，勾选后碰撞体会失效
                 tilemap_obj.GetComponent<Rigidbody2D>().bodyType=RigidbodyType2D.Static;
                 tilemap_obj.GetComponent<CompositeCollider2D>().isTrigger = true;
             }
