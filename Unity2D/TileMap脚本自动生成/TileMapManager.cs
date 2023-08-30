@@ -35,6 +35,8 @@ public class TileMapManager : MonoBehaviour
     }
     public void CreatTileMap(int count)
     {
+        int sort = 20;
+
         for(int i = 0; i < count; i++)
         {
             int c = Random.Range(0, tco.PakageTile_List.Count);
@@ -53,6 +55,7 @@ public class TileMapManager : MonoBehaviour
             }
             Tilemap tilemap = tilemap_obj.GetComponent<Tilemap>();
             {
+
                 for (int x = 0; x < map_width; x++)
                 {
                     for (int y = 0; y < map_length; y++)
@@ -61,6 +64,28 @@ public class TileMapManager : MonoBehaviour
                         tilemap.SetTile(new Vector3Int(x, y, 0), tco.GetTile(tilename));
                     }
                 }
+                {
+                    //!!!添加四角,x+
+                    tilemap.SetTile(new Vector3Int(map_width, map_length / 2, 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(map_width+1, map_length / 2, 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(map_width + 2, map_length / 2, 0), tco.GetTile(tilename));
+                    //x-
+                    tilemap.SetTile(new Vector3Int(-1, map_length / 2, 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(-2, map_length / 2, 0), tco.GetTile(tilename));
+                    //y+
+                    tilemap.SetTile(new Vector3Int(map_width/2, map_length , 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(map_width /2, map_length +1, 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(map_width /2, map_length + 2, 0), tco.GetTile(tilename));
+                    //y-
+                    tilemap.SetTile(new Vector3Int(map_width/2, -1, 0), tco.GetTile(tilename));
+                    tilemap.SetTile(new Vector3Int(map_width/2, -2, 0), tco.GetTile(tilename));
+                }
+                {
+                    //Sort 从高到低进行排序
+                    tilemap.GetComponent<TilemapRenderer>().sortingOrder = sort;
+                    sort -= 1;
+                }
+               
             }
             tilemap_List.Add(tilemap_obj);
         }
@@ -83,7 +108,6 @@ public class TileMapManager : MonoBehaviour
             }
             Ismetric_length = 0;
         }
-
     }
 }
 
