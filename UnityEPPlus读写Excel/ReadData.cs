@@ -1,3 +1,11 @@
+using UnityEngine;
+using UnityEditor;
+using OfficeOpenXml;
+using System.IO;
+using System.Xml;
+using System;
+
+//***dll需要用到百度盘里面的EPPlus.dll以及EPPlus.xml两个文件
 
 //注意 文件打开的时候，无法读取 
 public static void InputExcel()
